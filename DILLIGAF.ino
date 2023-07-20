@@ -9,7 +9,7 @@
      ░░  ░ ░ ░ ▒  ░ ░ ░ ▒    ░ ░  ░ ░ ░ ░ ▒  ░ ░ ░ ▒
       ░      ░ ░      ░ ░      ░        ░ ░      ░ ░
 $ Author: Risha $
-$ Revision: 0.5 $
+$ Revision: 0.9 $
 
 PascalCase  - Pins
 camelCase - Variables
@@ -167,26 +167,26 @@ void hunt() {
   Behavior:
   ----------
   - If any of the edge sensors (`FrontLeftEdge`, `FrontRightEdge`, or `BackEdge`) detect a value lower than `whiteValue`, the `line_control()` function is called to follow the line.
-  - If the `LeftSensor` is HIGH, the robot is turned left and `lastSensorValue` is set to 1.
-  - If the `FrontLeftSensor` is HIGH, the robot is turned right and `lastSensorValue` is set to 4.
-  - If the `FrontMiddleSensor` is HIGH, the robot goes forward and `lastSensorValue` is set to 3.
-  - If the `FrontRightSensor` is HIGH, the robot is turned left and `lastSensorValue` is set to 2.
-  - If the `RightSensor` is HIGH, the robot is turned right and `lastSensorValue` is set to 5.
+  - If the `FrontMiddleSensor` is HIGH, the robot goes forward and `lastSensorValue` is set to 1.
+  - If the `FrontLeftSensor` is HIGH, the robot is turned right and `lastSensorValue` is set to 2.
+  - If the `FrontRightSensor` is HIGH, the robot is turned left and `lastSensorValue` is set to 3.
+  - If the `LeftSensor` is HIGH, the robot is turned left and `lastSensorValue` is set to 3.
+  - If the `RightSensor` is HIGH, the robot is turned right and `lastSensorValue` is set to 2.
   - If none of the above conditions are met, the function checks the value of `lastSensorValue` to determine the appropriate motor control actions:
-    - If `lastSensorValue` is 1 or 2, the robot is controlled to move backward and turn slightly to the right.
-    - If `lastSensorValue` is 3, the robot is controlled to move forward with equal motor speeds.
-    - If `lastSensorValue` is 4 or 5, the robot is controlled to move forward and turn slightly to the left.
+    - If `lastSensorValue` is 1, the robot is controlled to move forward with equal motor speeds.
+    - If `lastSensorValue` is 2, the robot is controlled to move backward and turn slightly to the right.
+    - If `lastSensorValue` is 3, the robot is controlled to move forward and turn slightly to the left.
  */
 
   if (analogRead(FrontLeftEdge) < whiteValue || analogRead(FrontRightEdge) < whiteValue || analogRead(BackEdge) < whiteValue) {
     line_control();
   }
 
-  else if (digitalRead(FrontMiddleSensor)  == HIGH) {
+  else if (digitalRead(FrontMiddleSensor) == HIGH) {
     delay(8);
     if (digitalRead(FrontMiddleSensor) == HIGH) {
       go_forward(-1);
-      lastSensorValue = 3;
+      lastSensorValue = 1;
     }
   }
 
@@ -194,7 +194,7 @@ void hunt() {
     delay(8);
     if (digitalRead(FrontLeftSensor) == HIGH) {
       turn_right(-1);
-      lastSensorValue = 4;
+      lastSensorValue = 2;
     }
   }
 
@@ -202,7 +202,7 @@ void hunt() {
     delay(8);
     if (digitalRead(FrontRightSensor) == HIGH) {
       turn_left(-1);
-      lastSensorValue = 2;
+      lastSensorValue = 3;
     }
   }
 
@@ -210,7 +210,7 @@ void hunt() {
     delay(8);
     if (digitalRead(LeftSensor) == HIGH) {
       turn_left(-1);
-      lastSensorValue = 1;
+      lastSensorValue = 3;
     }
   }
 
@@ -218,25 +218,19 @@ void hunt() {
     delay(8);
     if (digitalRead(RightSensor) == HIGH) {
       turn_right(-1);
-      lastSensorValue = 5;
+      lastSensorValue = 2;
     }
   }
 
   else {
     if (lastSensorValue == 1) {
-      motor_control(-150, 200);
-    }
-    else if (lastSensorValue == 2) {
-      motor_control(-150, 200);
-    }
-    else if (lastSensorValue == 3) {
       motor_control(220, 220);
     }
-    else if (lastSensorValue == 4) {
+    else if (lastSensorValue == 2) {
       motor_control(200, -150);
     }
-    else if (lastSensorValue == 5) {
-      motor_control(200, -150);
+    else if (lastSensorValue == 3) {
+      motor_control(-150, 200);
     }
   }
 

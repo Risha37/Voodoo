@@ -24,7 +24,7 @@ snake_case  - Functions
 
 unsigned int dipNum;
 const int blackValue = 650, whiteValue = 500;
-int lastSensorValue = 0;    // last side the opponent has been detected
+int lastSensorValue = 0;
 bool buttonPressed = false, robotOn = false;
 unsigned long buttonPressTime = 0;
 
